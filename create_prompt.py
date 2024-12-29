@@ -1,5 +1,6 @@
 from datasets import load_dataset
 import json
+import os
 
 dt = load_dataset("shipWr3ck/supersummary", split="test")
 all_claims = json.load(open("claims_dict.json"))
@@ -40,5 +41,6 @@ for k in all_claims:
             # import pdb; pdb.set_trace()
             if "/" in method:
                 method = method.split("plansumm/new_names/supersummary_70b_")[1].split(".json")[0]
-            with open(f"{k}_{method}_{i}.txt", "w") as f:
+            os.makedirs(str(k), exist_ok=True)
+            with open(f"{k}/{method}_{i}.txt", "w") as f:
                 f.write(prompt_text)
